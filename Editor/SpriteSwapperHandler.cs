@@ -28,8 +28,6 @@ public class SpriteSwapperHandler : OdinEditor {
 	public void Populate() {
 
 		mySpriteSwapper.swapSets.Clear();
-		Debug.Log("Fetching all assets at path: " + mySpriteSwapper.originalPath);
-
 		Object[] originalAssets = GetAtPath(mySpriteSwapper.originalPath);
 		List<Sprite> originalSprites = new List<Sprite>();
 		List<Texture2D> originalTextures = new List<Texture2D>();
@@ -50,13 +48,12 @@ public class SpriteSwapperHandler : OdinEditor {
 			}
 		}
 
-		Debug.Log("Got " + originalAssets.Length + " objects.");
-		Debug.Log("Got " + originalSprites.Count + " sprites.");
 		Debug.Log("Got " + originalTextures.Count + " textures.");
+		Debug.Log("Got " + originalSprites.Count + "original sprites.");
 		Debug.Log("Got " + variantSprites.Count + " variant sprites.");
 
 		foreach(Texture2D tex in originalTextures) {
-			Debug.Log("Processing texture:" + tex.name);
+			Debug.Log("Processing swap set:" + tex.name);
 			SwapSet swapSet = new SwapSet(tex);
 			List<Sprite> spriteList = new List<Sprite>();
 			foreach(Sprite sp in originalSprites) {
@@ -83,15 +80,9 @@ public class SpriteSwapperHandler : OdinEditor {
 	private static int CompareSprites(Sprite x, Sprite y) {
 		int xIndex = x.name.LastIndexOf("_");
 		int yIndex = y.name.LastIndexOf("_");
-
-		//string xs = x.name.Substring(xIndex+1);
-		//string ys = y.name.Substring(yIndex+1);
-
-		//Debug.Log("xs=" + xs + ", ys=" + ys);
-
 		int xVal = Convert.ToInt32(x.name.Substring(xIndex + 1));
 		int yVal = Convert.ToInt32(y.name.Substring(yIndex + 1));
-		return xVal - yVal;// x.name.CompareTo(y.name);	
+		return xVal - yVal;
 	}
 
 
@@ -116,12 +107,10 @@ public class SpriteSwapperHandler : OdinEditor {
 				localPath += lastPart;
 
 			localPath = localPath.Replace(@"/", @"\");
-			//Debug.Log("localpath:" + localPath);
 
 			Object[] t = AssetDatabase.LoadAllAssetsAtPath(localPath);
 			foreach(Object obj in t) {
 				if(t != null) {
-					//Debug.Log("obj:" + obj.name);
 					al.Add(obj);
 				}
 			}

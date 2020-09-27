@@ -29,6 +29,7 @@ public class SpriteSwapper : SerializedMonoBehaviour {
 					if(sr.sprite == swapSets[i].original[j] && swapSets[i].variant.Length > 0) {
 						int index = j % swapSets[i].variant.Length;
 						sr.sprite = swapSets[i].variant[index];
+						return;
 					}
 				}
 			}
@@ -41,17 +42,13 @@ public class SpriteSwapper : SerializedMonoBehaviour {
 
 [Serializable]
 public class SwapSet {
-
-	//[TableColumnWidth(57, Resizable = true)]
 	[ReadOnly]
 	public string name;
 
 	[PreviewField(64, ObjectFieldAlignment.Center), TableColumnWidth(64, Resizable = false)]
 	public Texture2D tex;
 
-	//[AssetList(CustomFilterMethod = "isPartOfSet", Path = @"Images/Platformer/")]
 	public Sprite[] original;
-
 	public Sprite[] variant;
 
 	public SwapSet(Texture2D texture) {
@@ -63,4 +60,3 @@ public class SwapSet {
 		return sp.texture.name == name;
 	}
 }
-
